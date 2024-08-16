@@ -3,7 +3,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-unused-vars */
 
-
 import { addDays } from "date-fns";
 import {
   collection,
@@ -16,15 +15,12 @@ import {
 import React, { useEffect, useMemo, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Link } from "react-router-dom";
-import ClipLoader from "react-spinners/ClipLoader";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ReactComponent as DownloadIcon } from "../assets/download-button-1.svg";
 import { ReactComponent as User } from "../assets/user.svg";
 import { ReactComponent as Worker } from "../assets/working.svg";
 import { auth, db } from "../firebase-config";
-import Modal from "./Modal";
 
 export function Dashboard({ isAuth }) {
   const [postList, setPostList] = useState([]);
@@ -259,226 +255,164 @@ export function Dashboard({ isAuth }) {
   }, [filteredData]);
 
   return (
-    <div>
-      <div className="homePage">
-        {loading ? (
-          <div className="flex items-center justify-center h-screen">
-            <ClipLoader
-              color="#36d7b7"
-              loading={loading}
-              size={50}
-              aria-label="Loading Spinner"
-              data-testid="loader"
+    <div className="container mx-auto px-4 py-6">
+      <div className="p-4 bg-[#073b4c] relative rounded-lg shadow-md">
+        <ul className="flex flex-col md:flex-row justify-between items-center">
+          <li className="text-[#0ead69] font-bold text-xl md:text-2xl">
+            Dash<span className="text-white">board</span>
+          </li>
+          <li className="text-white font-bold">
+            Total Working Time: {formatTime(calculateTotalWorkingTime())} Hours
+          </li>
+          <li className="text-white font-bold flex items-center">
+            <User className="w-6 h-6" />
+            <p className="ml-2 text-[#219ebc]">
+              {currentUser ? currentUser.displayName : "Loading..."}
+            </p>
+          </li>
+          <li className="text-white font-bold flex items-center mt-4 md:mt-0">
+            <Worker className="w-6 h-6" />
+            <span className="ml-2">Running...</span>
+          </li>
+          <li className="mt-4 md:mt-0 cursor-pointer" onClick={exportToCSV}>
+            <DownloadIcon className="w-6 h-6 text-green-900" />
+          </li>
+        </ul>
+      </div>
+      <div className="flex flex-wrap">
+        <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4">
+          <div className="flex flex-col space-y-4">
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-        ) : (
-          <>
-            {isAuth ? (
-              <div>
-                <div className="p-4 bg-[#073b4c] relative">
-                  <ul className="flex justify-between ml-4 pt-3">
-                    <li className="text-[#0ead69] font-bold text-[21px] ml-3 mt-[-4px]">
-                      Dash
-                      <span className="text-white">board</span>
-                    </li>
-                    <li className="text-white font-bold">
-                      Total Working Time :{" "}
-                      {formatTime(calculateTotalWorkingTime())} Hours.
-                    </li>
-                    <li className="text-white font-bold flex justify-center">
-                      <User width="25" height="25" title="User Name" />
-                      <p className="text-[#219ebc] ml-2">
-                        {currentUser ? currentUser.displayName : "Loading..."}
-                      </p>
-                    </li>
-                    <li className="flex justify-center">
-                      <Worker width="25" height="25" title="Working Status" />
-                      <span className="text-white font-bold text-[16px] ml-2">
-                        {" "}
-                        Running...
-                      </span>
-                    </li>
-                    <li
-                      className="text-white font-bold cursor-pointer text-green-900"
-                      onClick={exportToCSV}
-                    >
-                      <DownloadIcon
-                        width="25"
-                        height="25"
-                        title="Export Report"
-                      />
-                    </li>
-                  </ul>
-                </div>
-                <div className="my-4">
-                    <div className="flex justify-around my-6">
-                      <div>
-                        <input
-                          type="text"
-                          placeholder="Search..."
-                          value={searchTerm}
-                          onChange={(e) => setSearchTerm(e.target.value)}
-                          className="p-2 ml-2 border border-gray-300 rounded-md sm:mb-2"
-                        />
-                        <select
-                          value={dateRange}
-                          onChange={(e) => handleDateRangeChange(e.target.value)}
-                          className="ml-2 p-2 border border-gray-300 rounded-md"
-                        >
-                          <option value="Select-Days">Select Days</option>
-                          <option value="allDays">All Days</option>
-                          <option value="7">Last 7 Days</option>
-                          <option value="10">Last 10 Days</option>
-                          <option value="15">Last 15 Days</option>
-                          <option value="30">Last 30 Days</option>
-                        </select>  
-                      </div>
-                      <div>
-                        <DatePicker
-                          selected={startDate}
-                          onChange={(date) => setStartDate(date)}
-                          selectsStart
-                          startDate={startDate}
-                          endDate={endDate}
-                          placeholderText="Start Date"
-                          className="mr-2 p-2 border border-gray-300 rounded-md sm:mb-2"
-                        />
-                        <DatePicker
-                          selected={endDate}
-                          onChange={(date) => setEndDate(date)}
-                          selectsEnd
-                          startDate={startDate}
-                          endDate={endDate}
-                          placeholderText="End Date"
-                          className="p-2 border border-gray-300 rounded-md"
-                        />
-                      </div>
-                    </div>
-                </div>
+        </div>
 
-                <div className="overflow-x-auto">
-                  <table className="table-auto w-full bg-white pl-2">
-                    <thead className="bg-gray-800 text-white p-2">
-                      <tr className="font-mono text-[18px]">
-                        <th className="w-20 p-3 font-semibold tracking-wide text-left">
-                          Serial No.
-                        </th>
-                        <th className="w-20 p-3 font-semibold tracking-wide text-left">
-                          Project Details
-                        </th>
-                        <th className="w-20 p-3 font-semibold tracking-wide text-left">
-                          Durations
-                        </th>
-                        <th className="w-20 p-3 font-semibold tracking-wide text-left">
-                          Update Time
-                        </th>
-                        <th className="w-12 p-3 font-semibold tracking-wide text-left">
-                          Athor
-                        </th>
-                        <th className="w-8 p-3 font-semibold tracking-wide text-left">
-                          Action
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-100">
-                      {currentData.map((post, index) => (
-                        <tr key={post.id} className="border-t border-gray-300">
-                          <td className="px-4 py-2 whitespace-nowrap font-bold">
-                            {indexOfFirstRow + index + 1}{" "}
-                            {/* Adjust the serial number */}
-                          </td>
-                          <td className="px-4 py-2">{post.title}</td>
-                          <td className="px-4 py-2">
-                            {post.totalTimes
-                              ? formatTime(
-                                  post.totalTimes.reduce(
-                                    (acc, curr) => acc + curr,
-                                    0
-                                  )
-                                )
-                              : "No time tracked"}
-                          </td>
-                          <td className="px-4 py-2">
-                            {post.createdAt
-                              ? post.createdAt.toLocaleString()
-                              : ""}
-                          </td>
-                          <td className="px-4 py-2 whitespace-nowrap font-bold text-[#073b4c]">
-                            @{post.author.name}
-                          </td>
-                          <td className="px-4 py-2">
-                            <button
-                              onClick={() => deletePost(post.id)}
-                              className="text-white bg-red-700 hover:bg-red-800 px-4 py-2 rounded"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                  <div>
-                    <div className="flex justify-between mt-4">
-                      <button
-                        onClick={handlePrevious}
-                        disabled={currentPage === 1}
-                        className={`px-4 py-2 ${
-                          currentPage === 1
-                            ? "bg-gray-300"
-                            : "bg-blue-500 hover:bg-blue-700 text-white"
-                        } rounded ml-4`}
-                      >
-                        Previous
-                      </button>
-                      <button
-                        onClick={handleNext}
-                        disabled={
-                          currentPage ===
-                          Math.ceil(filteredData.length / rowsPerPage)
-                        }
-                        className={`px-4 py-2 ${
-                          currentPage ===
-                          Math.ceil(filteredData.length / rowsPerPage)
-                            ? "bg-gray-300"
-                            : "bg-blue-500 hover:bg-blue-700 text-white"
-                        } rounded mr-4`}
-                      >
-                        Next
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <Modal
-                  isOpen={showConfirmationModal}
-                  onCancel={closeConfirmationModal}
-                  onConfirm={confirmDelete}
-                />
-              </div>
-            ) : (
-              <>
-                <div className="h-screen flex items-center justify-center font-mono">
-                  <div className="text-center">
-                    <h1 className="text-[150px] font-bold text-red-500">404</h1>
-                    <p className="text-2xl text-gray-700 mb-4">
-                      Oops! The page you're looking for doesn't exist.
-                    </p>
-                    <p className="text-[24px] text-red-600 mb-4">
-                      Please log in to view the dashboard.
-                    </p>
-                    <Link to="/Login" className="text-blue-500 hover:underline">
-                      Go back to the Login page
-                    </Link>
-                  </div>
-                  <ToastContainer />
-                </div>
-                >
-              </>
-            )}
-          </>
-        )}
+        <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4">
+          <div className="flex flex-col space-y-4">
+            <select
+              value={dateRange}
+              onChange={(e) => handleDateRangeChange(e.target.value)}
+              className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="Select-Days">Select Days</option>
+              <option value="allDays">All Days</option>
+              <option value="7">Last 7 Days</option>
+              <option value="10">Last 10 Days</option>
+              <option value="15">Last 15 Days</option>
+              <option value="30">Last 30 Days</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4">
+          <div className="flex flex-col space-y-4">
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              selectsStart
+              startDate={startDate}
+              endDate={endDate}
+              placeholderText="Start Date"
+              className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+        </div>
+
+        <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4">
+          <div className="flex flex-col space-y-4">
+            <DatePicker
+              selected={endDate}
+              onChange={(date) => setEndDate(date)}
+              selectsEnd
+              startDate={startDate}
+              endDate={endDate}
+              placeholderText="End Date"
+              className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="overflow-x-auto mt-4">
+        <table className="min-w-full bg-white">
+          <thead className="bg-gray-800 text-white">
+            <tr className="text-xs md:text-sm lg:text-base">
+              <th className="w-20 p-3 font-semibold text-left">Serial No.</th>
+              <th className="w-20 p-3 font-semibold text-left">
+                Project Details
+              </th>
+              <th className="w-20 p-3 font-semibold text-left">Durations</th>
+              <th className="w-20 p-3 font-semibold text-left">Update Time</th>
+              <th className="w-12 p-3 font-semibold text-left">Author</th>
+              <th className="w-8 p-3 font-semibold text-left">Action</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-100">
+            {currentData.map((post, index) => (
+              <tr key={post.id} className="border-t border-gray-300">
+                <td className="px-4 py-2 font-bold">
+                  {indexOfFirstRow + index + 1}
+                </td>
+                <td className="px-4 py-2">{post.title}</td>
+                <td className="px-4 py-2">
+                  {post.totalTimes
+                    ? formatTime(
+                        post.totalTimes.reduce((acc, curr) => acc + curr, 0)
+                      )
+                    : "No time tracked"}
+                </td>
+                <td className="px-4 py-2">
+                  {post.createdAt ? post.createdAt.toLocaleString() : ""}
+                </td>
+                <td className="px-4 py-2 font-bold text-[#073b4c]">
+                  @{post.author.name}
+                </td>
+                <td className="px-4 py-2">
+                  <button
+                    onClick={() => deletePost(post.id)}
+                    className="text-white bg-red-700 hover:bg-red-800 px-4 py-2 rounded"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div className="flex justify-between mt-4">
+          <button
+            onClick={handlePrevious}
+            disabled={currentPage === 1}
+            className={`px-4 py-2 ${
+              currentPage === 1
+                ? "bg-gray-300"
+                : "bg-blue-500 hover:bg-blue-700 text-white"
+            } rounded`}
+          >
+            Previous
+          </button>
+          <button
+            onClick={handleNext}
+            disabled={
+              currentPage === Math.ceil(filteredData.length / rowsPerPage)
+            }
+            className={`px-4 py-2 ${
+              currentPage === Math.ceil(filteredData.length / rowsPerPage)
+                ? "bg-gray-300"
+                : "bg-blue-500 hover:bg-blue-700 text-white"
+            } rounded`}
+          >
+            Next
+          </button>
+        </div>
       </div>
     </div>
   );
 }
-export default Dashboard; 
+
+export default Dashboard;

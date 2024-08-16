@@ -20,6 +20,36 @@ const firebaseConfig = {
  
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+// Firestore limit on the number of documents
+// export const getAll = (userId) => {
+//   const ref = db.collection("users")
+//                 .doc(userId)
+//                 .collection("notes");
+
+//   getPagedResults(ref, null);
+// };
+
+// const getPagedResults = (ref, lastVisible) => {
+//   let query = ref.limit(1000);
+
+//   if (lastVisible) {
+//     query = query.startAfter(lastVisible);
+//   }
+
+//   query.get().then((results) => {
+//     console.log("results size:", results.size);
+
+//     if (results.size === 1000) {
+//       // There might be more documents, so get the next page
+//       const lastDoc = results.docs[results.size - 1];
+//       getPagedResults(ref, lastDoc);
+//     } else {
+//       console.log("All documents retrieved");
+//     }
+//   }).catch((error) => {
+//     console.error("Error getting documents:", error);
+//   });
+// };
 
 // Initialize Firebase Authentication and get a reference to the service
 
