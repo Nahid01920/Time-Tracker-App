@@ -279,7 +279,8 @@ export function Dashboard({ isAuth }) {
           </li>
         </ul>
       </div>
-      <div className="flex flex-wrap">
+
+      <div className="flex flex-wrap justify-between mt-4">
         <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4">
           <div className="flex flex-col space-y-4">
             <input
@@ -310,7 +311,7 @@ export function Dashboard({ isAuth }) {
         </div>
 
         <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4">
-          <div className="flex flex-col space-y-4">
+          <div className="flex flex-col">
             <DatePicker
               selected={startDate}
               onChange={(date) => setStartDate(date)}
@@ -318,13 +319,13 @@ export function Dashboard({ isAuth }) {
               startDate={startDate}
               endDate={endDate}
               placeholderText="Start Date"
-              className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+              className="w-full mr-2 p-2 border border-gray-300 rounded-md sm:mb-2"
+            />{" "}
           </div>
         </div>
 
         <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4">
-          <div className="flex flex-col space-y-4">
+          <div className="flex flex-col ">
             <DatePicker
               selected={endDate}
               onChange={(date) => setEndDate(date)}
@@ -332,8 +333,8 @@ export function Dashboard({ isAuth }) {
               startDate={startDate}
               endDate={endDate}
               placeholderText="End Date"
-              className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+              className="w-full p-2 border border-gray-300 rounded-md"
+            />{" "}
           </div>
         </div>
       </div>
