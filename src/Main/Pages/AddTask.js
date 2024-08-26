@@ -151,68 +151,7 @@ function CreatePost({ isAuth }) {
   };
 
   return (
-    // <div className="createPostPage min-h-screen  px-4 flex items-center justify-center bg-gray-100 w-full">
-    //   <div className="w-full md:w-1/2 mx-auto py-5 bg-white rounded-lg shadow border">
-    //     <div className="text-center mb-6">
-    //       <h1 className="text-4xl font-bold text-blue-500 mb-6">Time Tracker</h1>
-    //       <p className="text-gray-600">A Web Application for Tracking Time</p>
-    //     </div>
-
-    //     {tasks.map((task, index) => (
-    //       <div key={task.id} className="mb-4">
-    //         <ul className="flex flex-col md:flex-row justify-between pl-4 mb-4">
-    //           <li className="mb-4 md:mb-0 w-full md:w-2/3">
-    //             <input
-    //               type="text"
-    //               placeholder="Enter Project Name"
-    //               className="border border-gray-300 shadow px-2 py-2 mt-1 w-full rounded"
-    //               value={task.title}
-    //               onChange={(event) => handleTitleChange(index, event.target.value)}
-    //             />
-    //           </li>
-    //           <li className="w-full md:w-1/3 lg:mr-6">
-    //             <div className="clock-count flex mt-1 justify-center md:justify-end text-right">
-    //               <div className="timing-clock mt-1.5 ml-2 text-[20px]">
-    //                 <h1 title="Time Count">{formatTime(task.elapsedTime)}</h1>
-    //               </div>
-    //               <div className="clock-icon ml-2 md:ml-8 mt-2">
-    //                 <div>
-    //                   {!task.running ? (
-    //                     <button onClick={() => startTimer(index)}>
-    //                       <PlayIcon width="24" height="24" title="Start Timer" />
-    //                     </button>
-    //                   ) : (
-    //                     <button onClick={() => pauseTimer(index)}>
-    //                       <PauseIcon width="24" height="24" title="Pause Timer" />
-    //                     </button>
-    //                   )}
-    //                   <button onClick={() => stopTimer(index)} className="ml-2">
-    //                     <PowerOffIcon width="26" height="26" title="Stop Timer" />
-    //                   </button>
-    //                   <button onClick={() => deleteTask(index)} className="ml-2">
-    //                     <Delete width="26" height="26" title="Delete" />
-    //                     {/* <span>Delete Task</span> */}
-    //                   </button>
-    //                 </div>
-    //               </div>
-    //             </div>
-    //           </li>
-    //         </ul>
-    //       </div>
-    //     ))}
-
-    //     <div className="mb-4 flex justify-center">
-    //       <button
-    //         onClick={addTask}
-    //         className="add-page flex items-center justify-center bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
-    //       >
-    //         <span>Add Task</span>
-    //         <Pages width="30" height="30" title="Add Pages" />
-    //       </button>
-    //     </div>
-    //     <ToastContainer />
-    //   </div>
-    // </div>
+   
     <div className="createPostPage min-h-screen px-4 flex items-center justify-center bg-gray-100 w-full">
       <div className="w-full max-w-2xl mx-auto py-6 bg-white rounded-lg shadow-md border">
         <div className="text-center mb-8">
@@ -291,70 +230,6 @@ function CreatePost({ isAuth }) {
       </div>
     </div>
 
-  //   <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-  //   <div className="w-full max-w-3xl bg-white rounded-lg shadow-lg p-6">
-  //     <div className="text-center mb-8">
-  //       <h1 className="text-4xl font-bold text-blue-500 mb-2">Time Tracker</h1>
-  //       <p className="text-gray-600">Track your project time efficiently</p>
-  //     </div>
-  
-  //     {tasks.map((task, index) => (
-  //       <div key={task.id} className="mb-6">
-  //         <div className="flex flex-col md:flex-row items-start md:items-center justify-between">
-  //           <input
-  //             type="text"
-  //             placeholder="Enter Project Name"
-  //             className="border border-gray-300 shadow-sm px-3 py-2 rounded-md flex-grow mb-4 md:mb-0 md:mr-4"
-  //             value={task.title}
-  //             onChange={(event) => handleTitleChange(index, event.target.value)}
-  //           />
-  //           <div className="flex items-center space-x-4">
-  //             <span className="text-lg md:text-base font-semibold">{formatTime(task.elapsedTime)}</span>
-  //             <button
-  //               onClick={() => startTimer(index)}
-  //               className="text-green-500 hover:text-green-700"
-  //               aria-label="Start Timer"
-  //             >
-  //               <PlayIcon width="20" height="20" />
-  //             </button>
-  //             <button
-  //               onClick={() => pauseTimer(index)}
-  //               className="text-yellow-500 hover:text-yellow-700"
-  //               aria-label="Pause Timer"
-  //             >
-  //               <PauseIcon width="20" height="20" />
-  //             </button>
-  //             <button
-  //               onClick={() => stopTimer(index)}
-  //               className="text-red-500 hover:text-red-700"
-  //               aria-label="Stop Timer"
-  //             >
-  //               <PowerOffIcon width="20" height="20" />
-  //             </button>
-  //             <button
-  //               onClick={() => deleteTask(index)}
-  //               className="text-gray-500 hover:text-gray-700"
-  //               aria-label="Delete Task"
-  //             >
-  //               <Delete width="20" height="20" />
-  //             </button>
-  //           </div>
-  //         </div>
-  //       </div>
-  //     ))}
-  
-  //     <div className="flex justify-center">
-  //       <button
-  //         onClick={addTask}
-  //         className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 flex items-center transition duration-300"
-  //       >
-  //         <span className="mr-2">Add Task</span>
-  //         <Pages width="24" height="24" />
-  //       </button>
-  //     </div>
-  //     <ToastContainer />
-  //   </div>
-  // </div>
   
 
   );

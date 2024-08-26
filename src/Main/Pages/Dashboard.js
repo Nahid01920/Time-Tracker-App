@@ -303,7 +303,6 @@ export function Dashboard({ isAuth }) {
                 </div>
                 <div className="my-4">
                   <div className="flex flex-wrap justify-between mt-4">
-
                     <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 my-2 px-2">
                       <div className="flex flex-col space-y-4">
                         <input
@@ -362,42 +361,48 @@ export function Dashboard({ isAuth }) {
                         />{" "}
                       </div>
                     </div>
-
                   </div>
                 </div>
 
-                {/* <div className="overflow-x-auto">
-                  <table className="table-auto w-full bg-white pl-2">
-                    <thead className="bg-gray-800 text-white p-2">
-                      <tr className="font-mono text-[18px]">
-                        <th className="w-20 p-3 font-semibold tracking-wide text-left">
+                <div className="overflow-x-auto">
+                  <table className="table-auto w-full bg-white shadow-md rounded-lg border border-gray-300 ">
+                    <thead className="bg-blue-800 text-white">
+                      <tr className="font-mono text-sm md:text-base lg:text-lg top-border">
+                        <th className="p-3 font-semibold tracking-wide text-left rounded-tl-lg">
                           Serial No.
                         </th>
-                        <th className="w-20 p-3 font-semibold tracking-wide text-left">
+                        <th className="p-3 font-semibold tracking-wide text-left">
                           Project Details
                         </th>
-                        <th className="w-20 p-3 font-semibold tracking-wide text-left">
+                        <th className="p-3 font-semibold tracking-wide text-left">
                           Durations
                         </th>
-                        <th className="w-20 p-3 font-semibold tracking-wide text-left">
+                        <th className="p-3 font-semibold tracking-wide text-left">
                           Update Time
                         </th>
-                        <th className="w-12 p-3 font-semibold tracking-wide text-left">
-                          Athor
+                        <th className="p-3 font-semibold tracking-wide text-left">
+                          Author
                         </th>
-                        <th className="w-8 p-3 font-semibold tracking-wide text-left">
+                        <th className="p-3 font-semibold tracking-wide text-left rounded-tr-lg">
                           Action
                         </th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-100">
+                    <tbody>
                       {currentData.map((post, index) => (
-                        <tr key={post.id} className="border-t border-gray-300 hover:bg-green-300 hover:text-rose-700 cursor-pointer">
-                          <td className="px-4 py-2 whitespace-nowrap font-bold">
-                            {indexOfFirstRow + index + 1}{" "}
+                        <tr
+                          key={post.id}
+                          className={`${
+                            index % 2 === 0 ? "bg-amber-50" : "bg-[#D6EEEE]"
+                          } border-b border-gray-300 hover:bg-gray-200 hover:text-gray-800 cursor-pointer text-sm md:text-base lg:text-md`}
+                        >
+                          <td className="px-4 py-2 whitespace-nowrap font-medium text-gray-700 rounded-bl-lg">
+                            {indexOfFirstRow + index + 1}
                           </td>
-                          <td className="px-4 py-2">{post.title}</td>
-                          <td className="px-4 py-2">
+                          <td className="px-4 py-2 text-gray-600 rounded-bl-lg">
+                            {post.title}
+                          </td>
+                          <td className="px-4 py-2 text-gray-600 rounded-bl-lg">
                             {post.totalTimes
                               ? formatTime(
                                   post.totalTimes.reduce(
@@ -407,58 +412,10 @@ export function Dashboard({ isAuth }) {
                                 )
                               : "No time tracked"}
                           </td>
-                          <td className="px-4 py-2">
+                          <td className="px-4 py-2 text-gray-600 rounded-bl-lg">
                             {post.createdAt
                               ? post.createdAt.toLocaleString()
                               : ""}
-                          </td>
-                          <td className="px-4 py-2 whitespace-nowrap font-bold text-[#073b4c]">
-                            @{post.author.name}
-                          </td>
-                          <td className="px-4 py-2">
-                            <button
-                              onClick={() => deletePost(post.id)}
-                              className="text-white bg-red-700 hover:bg-red-800 px-4 py-2 rounded text-right"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div> */}
-                <div className="overflow-x-auto">
-                  <table className="table-auto w-full bg-white shadow-md rounded-lg border border-gray-300 ">
-                    <thead className="bg-blue-800 text-white">
-                      <tr className="font-mono text-sm md:text-base lg:text-lg top-border">
-                        <th className="p-3 font-semibold tracking-wide text-left rounded-tl-lg">Serial No.</th>
-                        <th className="p-3 font-semibold tracking-wide text-left">Project Details</th>
-                        <th className="p-3 font-semibold tracking-wide text-left">Durations</th>
-                        <th className="p-3 font-semibold tracking-wide text-left">Update Time</th>
-                        <th className="p-3 font-semibold tracking-wide text-left">Author</th>
-                        <th className="p-3 font-semibold tracking-wide text-left rounded-tr-lg">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {currentData.map((post, index) => (
-                        <tr
-                          key={post.id}
-                          className={`${
-                            index % 2 === 0 ? 'bg-amber-50' : 'bg-[#D6EEEE]'
-                          } border-b border-gray-300 hover:bg-gray-200 hover:text-gray-800 cursor-pointer text-sm md:text-base lg:text-md`}
-                        >
-                          <td className="px-4 py-2 whitespace-nowrap font-medium text-gray-700 rounded-bl-lg">
-                            {indexOfFirstRow + index + 1}
-                          </td>
-                          <td className="px-4 py-2 text-gray-600 rounded-bl-lg">{post.title}</td>
-                          <td className="px-4 py-2 text-gray-600 rounded-bl-lg">
-                            {post.totalTimes
-                              ? formatTime(post.totalTimes.reduce((acc, curr) => acc + curr, 0))
-                              : "No time tracked"}
-                          </td>
-                          <td className="px-4 py-2 text-gray-600 rounded-bl-lg">
-                            {post.createdAt ? post.createdAt.toLocaleString() : ""}
                           </td>
                           <td className="px-4 py-2 whitespace-nowrap font-medium text-gray-800 rounded-bl-lg">
                             @{post.author.name}
@@ -477,40 +434,36 @@ export function Dashboard({ isAuth }) {
                   </table>
                 </div>
 
-
-
-
-
                 <div>
-                    <div className="flex justify-between mt-4">
-                      <button
-                        onClick={handlePrevious}
-                        disabled={currentPage === 1}
-                        className={`px-4 py-2 ${
-                          currentPage === 1
-                            ? "bg-gray-300"
-                            : "bg-blue-500 hover:bg-blue-700 text-white"
-                        } rounded ml-4`}
-                      >
-                        Previous
-                      </button>
-                      <button
-                        onClick={handleNext}
-                        disabled={
-                          currentPage ===
-                          Math.ceil(filteredData.length / rowsPerPage)
-                        }
-                        className={`px-4 py-2 ${
-                          currentPage ===
-                          Math.ceil(filteredData.length / rowsPerPage)
-                            ? "bg-gray-300"
-                            : "bg-blue-500 hover:bg-blue-700 text-white"
-                        } rounded mr-4`}
-                      >
-                        Next
-                      </button>
-                    </div>
+                  <div className="flex justify-between mt-4">
+                    <button
+                      onClick={handlePrevious}
+                      disabled={currentPage === 1}
+                      className={`px-4 py-2 ${
+                        currentPage === 1
+                          ? "bg-gray-300"
+                          : "bg-blue-500 hover:bg-blue-700 text-white"
+                      } rounded ml-4`}
+                    >
+                      Previous
+                    </button>
+                    <button
+                      onClick={handleNext}
+                      disabled={
+                        currentPage ===
+                        Math.ceil(filteredData.length / rowsPerPage)
+                      }
+                      className={`px-4 py-2 ${
+                        currentPage ===
+                        Math.ceil(filteredData.length / rowsPerPage)
+                          ? "bg-gray-300"
+                          : "bg-blue-500 hover:bg-blue-700 text-white"
+                      } rounded mr-4`}
+                    >
+                      Next
+                    </button>
                   </div>
+                </div>
                 <Modal
                   isOpen={showConfirmationModal}
                   onCancel={closeConfirmationModal}
@@ -543,76 +496,3 @@ export function Dashboard({ isAuth }) {
   );
 }
 export default Dashboard;
-
-// import React from "react";
-// export function Dashboard()  {
-//   return (
-//     <div className="">
-//       {/* Main Content */}
-//       <div className=" ">
-//         <h2 className="text-2xl font-semibold mb-4  text-center">Overview</h2>
-
-//         <div className="flex flex-wrap -mx-3 mb-6">
-//           <div className="w-full md:w-1/2 lg:w-1/4 px-3 mb-6">
-//             <div className="bg-white p-4 shadow rounded">Content 1</div>
-//           </div>
-//           <div className="w-full md:w-1/2 lg:w-1/4 px-3 mb-6">
-//             <div className="bg-white p-4 shadow rounded">Content 2</div>
-//           </div>
-//           <div className="w-full md:w-1/2 lg:w-1/4 px-3 mb-6">
-//             <div className="bg-white p-4 shadow rounded">Content 3</div>
-//           </div>
-//           <div className="w-full md:w-1/2 lg:w-1/4 px-3 mb-6">
-//             <div className="bg-white p-4 shadow rounded">Content 4</div>
-//           </div>
-//         </div>
-
-//       </div>
-//     </div>
-//   );
-// };
-// export default Dashboard;
-
-
-
-
-// import React from 'react';
-
-// function Dashboard() {
-//   return (
-//     <div className="overflow-x-auto">
-//       <table className="min-w-full bg-white table-auto">
-//         <thead>
-//           <tr className="bg-gray-800 text-white">
-//             <th className="py-2 px-4 text-left">Header 1</th>
-//             <th className="py-2 px-4 text-left">Header 2</th>
-//             <th className="py-2 px-4 text-left">Header 3</th>
-//             <th className="py-2 px-4 text-left">Header 4</th>
-//             <th className="py-2 px-4 text-left">Header 5</th>
-//             <th className="py-2 px-4 text-left">Header 6</th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//           <tr className="border-b">
-//             <td className="py-2 px-4">Data 1</td>
-//             <td className="py-2 px-4">Data 2</td>
-//             <td className="py-2 px-4">Data 3</td>
-//             <td className="py-2 px-4">Data 4</td>
-//             <td className="py-2 px-4">Data 5</td>
-//             <td className="py-2 px-4">Data 6</td>
-//           </tr>
-//           <tr className="border-b">
-//             <td className="py-2 px-4">Data 7</td>
-//             <td className="py-2 px-4">Data 8</td>
-//             <td className="py-2 px-4">Data 9</td>
-//             <td className="py-2 px-4">Data 10</td>
-//             <td className="py-2 px-4">Data 11</td>
-//             <td className="py-2 px-4">Data 12</td>
-//           </tr>
-//         </tbody>
-//       </table>
-//     </div>
-//   );
-// }
-
-// export default Dashboard;
