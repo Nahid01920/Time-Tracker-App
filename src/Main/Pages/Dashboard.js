@@ -274,10 +274,10 @@ export function Dashboard({ isAuth }) {
           <>
             {isAuth ? (
               <div>
-                <div className="p-4 bg-[#073b4c] relative rounded-lg shadow-md">
+                <div className="p-4 bg-[#073b4c] relative shadow-md">
                   <ul className="flex flex-col md:flex-row justify-between items-center">
                     <li className="text-[#0ead69] font-bold text-xl md:text-2xl">
-                      Dash nahid<span className="text-white">board</span>
+                      Dash<span className="text-white">board</span>
                     </li>
                     <li className="text-white font-bold">
                       Total Working Time:{" "}
@@ -303,26 +303,27 @@ export function Dashboard({ isAuth }) {
                 </div>
                 <div className="my-4">
                   <div className="flex flex-wrap justify-between mt-4">
-                    <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4">
+
+                    <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 my-2 px-2">
                       <div className="flex flex-col space-y-4">
                         <input
                           type="text"
                           placeholder="Search..."
                           value={searchTerm}
                           onChange={(e) => setSearchTerm(e.target.value)}
-                          className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full mr-2 p-2 border border-gray-300 rounded-md sm:mb-2"
                         />
                       </div>
                     </div>
 
-                    <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4">
+                    <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 my-2 px-2">
                       <div className="flex flex-col space-y-4">
                         <select
                           value={dateRange}
                           onChange={(e) =>
                             handleDateRangeChange(e.target.value)
                           }
-                          className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full mr-2 p-2.5 border border-gray-300 rounded-md sm:mb-2"
                         >
                           <option value="Select-Days">Select Days</option>
                           <option value="allDays">All Days</option>
@@ -334,7 +335,7 @@ export function Dashboard({ isAuth }) {
                       </div>
                     </div>
 
-                    <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4">
+                    <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 my-2 px-2">
                       <div className="flex flex-col">
                         <DatePicker
                           selected={startDate}
@@ -348,7 +349,7 @@ export function Dashboard({ isAuth }) {
                       </div>
                     </div>
 
-                    <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4">
+                    <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 my-2 px-2">
                       <div className="flex flex-col ">
                         <DatePicker
                           selected={endDate}
@@ -361,10 +362,11 @@ export function Dashboard({ isAuth }) {
                         />{" "}
                       </div>
                     </div>
+
                   </div>
                 </div>
 
-                <div className="overflow-x-auto">
+                {/* <div className="overflow-x-auto">
                   <table className="table-auto w-full bg-white pl-2">
                     <thead className="bg-gray-800 text-white p-2">
                       <tr className="font-mono text-[18px]">
@@ -390,10 +392,9 @@ export function Dashboard({ isAuth }) {
                     </thead>
                     <tbody className="divide-y divide-gray-100">
                       {currentData.map((post, index) => (
-                        <tr key={post.id} className="border-t border-gray-300">
+                        <tr key={post.id} className="border-t border-gray-300 hover:bg-green-300 hover:text-rose-700 cursor-pointer">
                           <td className="px-4 py-2 whitespace-nowrap font-bold">
                             {indexOfFirstRow + index + 1}{" "}
-                            {/* Adjust the serial number */}
                           </td>
                           <td className="px-4 py-2">{post.title}</td>
                           <td className="px-4 py-2">
@@ -417,7 +418,7 @@ export function Dashboard({ isAuth }) {
                           <td className="px-4 py-2">
                             <button
                               onClick={() => deletePost(post.id)}
-                              className="text-white bg-red-700 hover:bg-red-800 px-4 py-2 rounded"
+                              className="text-white bg-red-700 hover:bg-red-800 px-4 py-2 rounded text-right"
                             >
                               Delete
                             </button>
@@ -426,7 +427,61 @@ export function Dashboard({ isAuth }) {
                       ))}
                     </tbody>
                   </table>
-                  <div>
+                </div> */}
+                <div className="overflow-x-auto">
+                  <table className="table-auto w-full bg-white shadow-md rounded-lg border border-gray-300 ">
+                    <thead className="bg-blue-800 text-white">
+                      <tr className="font-mono text-sm md:text-base lg:text-lg top-border">
+                        <th className="p-3 font-semibold tracking-wide text-left rounded-tl-lg">Serial No.</th>
+                        <th className="p-3 font-semibold tracking-wide text-left">Project Details</th>
+                        <th className="p-3 font-semibold tracking-wide text-left">Durations</th>
+                        <th className="p-3 font-semibold tracking-wide text-left">Update Time</th>
+                        <th className="p-3 font-semibold tracking-wide text-left">Author</th>
+                        <th className="p-3 font-semibold tracking-wide text-left rounded-tr-lg">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {currentData.map((post, index) => (
+                        <tr
+                          key={post.id}
+                          className={`${
+                            index % 2 === 0 ? 'bg-amber-50' : 'bg-[#D6EEEE]'
+                          } border-b border-gray-300 hover:bg-gray-200 hover:text-gray-800 cursor-pointer text-sm md:text-base lg:text-md`}
+                        >
+                          <td className="px-4 py-2 whitespace-nowrap font-medium text-gray-700 rounded-bl-lg">
+                            {indexOfFirstRow + index + 1}
+                          </td>
+                          <td className="px-4 py-2 text-gray-600 rounded-bl-lg">{post.title}</td>
+                          <td className="px-4 py-2 text-gray-600 rounded-bl-lg">
+                            {post.totalTimes
+                              ? formatTime(post.totalTimes.reduce((acc, curr) => acc + curr, 0))
+                              : "No time tracked"}
+                          </td>
+                          <td className="px-4 py-2 text-gray-600 rounded-bl-lg">
+                            {post.createdAt ? post.createdAt.toLocaleString() : ""}
+                          </td>
+                          <td className="px-4 py-2 whitespace-nowrap font-medium text-gray-800 rounded-bl-lg">
+                            @{post.author.name}
+                          </td>
+                          <td className="px-4 py-2 rounded-br-lg text-right">
+                            <button
+                              onClick={() => deletePost(post.id)}
+                              className=" text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded"
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+
+
+
+
+                <div>
                     <div className="flex justify-between mt-4">
                       <button
                         onClick={handlePrevious}
@@ -456,7 +511,6 @@ export function Dashboard({ isAuth }) {
                       </button>
                     </div>
                   </div>
-                </div>
                 <Modal
                   isOpen={showConfirmationModal}
                   onCancel={closeConfirmationModal}
@@ -480,7 +534,6 @@ export function Dashboard({ isAuth }) {
                   </div>
                   <ToastContainer />
                 </div>
-                >
               </>
             )}
           </>
@@ -490,3 +543,76 @@ export function Dashboard({ isAuth }) {
   );
 }
 export default Dashboard;
+
+// import React from "react";
+// export function Dashboard()  {
+//   return (
+//     <div className="">
+//       {/* Main Content */}
+//       <div className=" ">
+//         <h2 className="text-2xl font-semibold mb-4  text-center">Overview</h2>
+
+//         <div className="flex flex-wrap -mx-3 mb-6">
+//           <div className="w-full md:w-1/2 lg:w-1/4 px-3 mb-6">
+//             <div className="bg-white p-4 shadow rounded">Content 1</div>
+//           </div>
+//           <div className="w-full md:w-1/2 lg:w-1/4 px-3 mb-6">
+//             <div className="bg-white p-4 shadow rounded">Content 2</div>
+//           </div>
+//           <div className="w-full md:w-1/2 lg:w-1/4 px-3 mb-6">
+//             <div className="bg-white p-4 shadow rounded">Content 3</div>
+//           </div>
+//           <div className="w-full md:w-1/2 lg:w-1/4 px-3 mb-6">
+//             <div className="bg-white p-4 shadow rounded">Content 4</div>
+//           </div>
+//         </div>
+
+//       </div>
+//     </div>
+//   );
+// };
+// export default Dashboard;
+
+
+
+
+// import React from 'react';
+
+// function Dashboard() {
+//   return (
+//     <div className="overflow-x-auto">
+//       <table className="min-w-full bg-white table-auto">
+//         <thead>
+//           <tr className="bg-gray-800 text-white">
+//             <th className="py-2 px-4 text-left">Header 1</th>
+//             <th className="py-2 px-4 text-left">Header 2</th>
+//             <th className="py-2 px-4 text-left">Header 3</th>
+//             <th className="py-2 px-4 text-left">Header 4</th>
+//             <th className="py-2 px-4 text-left">Header 5</th>
+//             <th className="py-2 px-4 text-left">Header 6</th>
+//           </tr>
+//         </thead>
+//         <tbody>
+//           <tr className="border-b">
+//             <td className="py-2 px-4">Data 1</td>
+//             <td className="py-2 px-4">Data 2</td>
+//             <td className="py-2 px-4">Data 3</td>
+//             <td className="py-2 px-4">Data 4</td>
+//             <td className="py-2 px-4">Data 5</td>
+//             <td className="py-2 px-4">Data 6</td>
+//           </tr>
+//           <tr className="border-b">
+//             <td className="py-2 px-4">Data 7</td>
+//             <td className="py-2 px-4">Data 8</td>
+//             <td className="py-2 px-4">Data 9</td>
+//             <td className="py-2 px-4">Data 10</td>
+//             <td className="py-2 px-4">Data 11</td>
+//             <td className="py-2 px-4">Data 12</td>
+//           </tr>
+//         </tbody>
+//       </table>
+//     </div>
+//   );
+// }
+
+// export default Dashboard;

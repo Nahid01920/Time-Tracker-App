@@ -15,77 +15,146 @@ function Signup({ setUserData }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  
+ 
+  //   e.preventDefault();
+
+  //   // Basic validation
+  //   try {
+  //     if (!username || !country || !phoneNumber || !email || !password) {
+  //       toast.error("Please All fields are required");
+  //     }
+  //     if (!/^[A-Za-z\s]+$/.test(username.trim())) {
+  //       toast.error("Enter a valid name");
+  //     }
+
+  //     if (!/^[A-Za-z\s]+$/.test(country.trim())) {
+  //       toast.error("Enter a valid country name");
+  //     }
+
+  //     if (!/\S+@\S+\.\S+/.test(email)) {
+  //       toast.error("Enter a valid email address");
+  //     }
+
+  //     if (!/^\d+$/.test(phoneNumber.trim())) {
+  //       toast.error("Enter a valid phone number");
+  //     }
+
+  //     if (password.length < 8) {
+  //       toast.error("Password must be at least 8 characters long");
+  //     }
+
+  //     const userCredential = await createUserWithEmailAndPassword(
+  //       auth,
+  //       email,
+  //       password,
+  //     );
+
+  //     const user = userCredential.user;
+  //     if (user) {
+  //       // Update user profile
+  //       await updateProfile(user, {
+  //         displayName: username,
+  //         phoneNumber: phoneNumber,
+  //         email: email,
+  //       });
+
+  //       // Add user data to Firestore
+  //       const docRef = await addDoc(collection(db, "userData"), {
+  //         Name: username,
+  //         Email: email,
+  //         Country: country,
+  //         Phone: phoneNumber
+  //       });
+
+  //       const userData = {
+  //         id: docRef.id,
+  //         Name: username,
+  //         Email: email,
+  //         Country: country,
+  //         Phone: phoneNumber,
+  //       };
+
+  //       setUserData(userData);
+  //       navigate("/login");
+  //       toast.success("Signup Successful");
+  //       console.log("Signup Successful");
+  //     }
+  //   } catch (error) {
+  //     setError(error.message);
+  //     console.error("Error signing up:", error);
+  //     toast.error("Signup error: ", error);
+  //   }
+  // };
   const handleSignup = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    // Basic validation
-    try {
-      if (!username || !country || !phoneNumber || !email || !password) {
-        toast.error("Please All fields are required");
-      }
-      if (!/^[A-Za-z\s]+$/.test(username.trim())) {
-        toast.error("Enter a valid name");
-      }
+  // Basic validation
+  if (!username || !country || !phoneNumber || !email || !password) {
+    toast.error("All fields are required");
+    return;
+  }
+  if (!/^[A-Za-z\s]+$/.test(username.trim())) {
+    toast.error("Enter a valid name");
+    return;
+  }
+  if (!/^[A-Za-z\s]+$/.test(country.trim())) {
+    toast.error("Enter a valid country name");
+    return;
+  }
+  if (!/\S+@\S+\.\S+/.test(email)) {
+    toast.error("Enter a valid email address");
+    return;
+  }
+  if (!/^\d+$/.test(phoneNumber.trim())) {
+    toast.error("Enter a valid phone number");
+    return;
+  }
+  if (password.length < 8) {
+    toast.error("Password must be at least 8 characters long");
+    return;
+  }
 
-      if (!/^[A-Za-z\s]+$/.test(country.trim())) {
-        toast.error("Enter a valid country name");
-      }
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
 
-      if (!/\S+@\S+\.\S+/.test(email)) {
-        toast.error("Enter a valid email address");
-      }
+    const user = userCredential.user;
+    if (user) {
+      // Update user profile
+      await updateProfile(user, {
+        displayName: username,
+      });
 
-      if (!/^\d+$/.test(phoneNumber.trim())) {
-        toast.error("Enter a valid phone number");
-      }
+      // Add user data to Firestore
+      const docRef = await addDoc(collection(db, "userData"), {
+        Name: username,
+        Email: email,
+        Country: country,
+        Phone: phoneNumber
+      });
 
-      if (password.length < 8) {
-        toast.error("Password must be at least 8 characters long");
-      }
+      const userData = {
+        id: docRef.id,
+        Name: username,
+        Email: email,
+        Country: country,
+        Phone: phoneNumber,
+      };
 
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      setUserData(userData);
+      navigate("/login");
+      toast.success("Signup Successful");
 
-      const user = userCredential.user;
-      if (user) {
-        // Update user profile
-        await updateProfile(user, {
-          displayName: username,
-          phoneNumber: phoneNumber,
-          email: email,
-        });
-
-        // Add user data to Firestore
-        const docRef = await addDoc(collection(db, "userData"), {
-          Name: username,
-          Email: email,
-          Country: country,
-          Phone: phoneNumber,
-        });
-
-        const userData = {
-          id: docRef.id,
-          Name: username,
-          Email: email,
-          Country: country,
-          Phone: phoneNumber,
-        };
-
-        setUserData(userData);
-        navigate("/login");
-        toast.success("Signup Successful");
-        console.log("Signup Successful");
-      }
-    } catch (error) {
-      setError(error.message);
-      console.error("Error signing up:", error);
-      toast.error("Signup error: ", error);
     }
-  };
+  } catch (error) {
+    setError(error.message);
+    console.error("Error signing up:", error);
+    toast.error("Signup error: " + error.message);
+  }
+};
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
