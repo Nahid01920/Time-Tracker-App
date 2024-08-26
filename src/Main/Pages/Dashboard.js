@@ -277,7 +277,7 @@ export function Dashboard({ isAuth }) {
                 <div className="p-4 bg-[#073b4c] relative rounded-lg shadow-md">
                   <ul className="flex flex-col md:flex-row justify-between items-center">
                     <li className="text-[#0ead69] font-bold text-xl md:text-2xl">
-                      Dash<span className="text-white">board</span>
+                      Dash nahid<span className="text-white">board</span>
                     </li>
                     <li className="text-white font-bold">
                       Total Working Time:{" "}
